@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    $("#ok").click(function () {
+        $("#regras").css("display", "none");
+        $(".container").css("display", "block");
+    })
+});
+
+$(document).ready(function () {
     //no caso do termo a palavraCorreta é do banco, ou gerada automáticamente
     const palavraCorreta = "TIGRE";
     //https://www.npmjs.com/package/@andsfonseca/palavras-pt-br?activeTab=readme (vale a pena tentar)
