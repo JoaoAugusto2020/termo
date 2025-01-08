@@ -11,26 +11,6 @@ body {
   background-color: #f0f0f0;
 }
 
-#regras {
-  z-index: 1;
-  display: block;
-  position: absolute;
-  background-color: cadetblue;
-  width: 30%;
-  height: auto;
-  text-align: center;
-  padding: 10px 20px;
-  font-size: larger;
-}
-.exemplo {
-  border: 1px solid;
-  display: inline-block;
-  width: 30px;
-  height: 35px;
-  text-align: center;
-  font-size: 20px;
-}
-
 .container {
   text-align: center;
 }
@@ -40,30 +20,99 @@ body {
 }
 input {
   padding: 10px;
-  font-size: 16px;
-}
-
-button {
-  padding: 10px;
-  font-size: 16px;
-  margin-left: 10px;
-}
-
-.input-letra {
-  width: 30px;
-  height: 35px;
-  text-align: center;
-  font-size: 20px;
-  margin: 1px;
-
-  user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -o-user-select: none;
 }
 
 #message {
   margin-top: 20px;
   font-size: 18px;
+}
+
+@media screen and (min-width: 200px) {
+  body {
+    font-size: large;
+  }
+
+  #regras {
+    z-index: 1;
+    display: block;
+    position: absolute;
+    background-color: cadetblue;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: larger;
+  }
+
+  .exemplo {
+    border: 1px solid;
+    display: inline-block;
+    width: 50px;
+    height: 55px;
+    text-align: center;
+    font-size: 40px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 25px;
+    margin-left: 10px;
+  }
+
+  .input-letra {
+    width: 50px;
+    height: 55px;
+    text-align: center;
+    font-size: 40px;
+    margin: 1px;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  #regras {
+    z-index: 1;
+    display: block;
+    position: absolute;
+    background-color: cadetblue;
+    width: 30%;
+    height: auto;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: larger;
+  }
+  
+  .exemplo {
+    border: 1px solid;
+    display: inline-block;
+    width: 30px;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
+  .input-letra {
+    width: 30px;
+    height: 35px;
+    text-align: center;
+    font-size: 20px;
+    margin: 1px;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+  }
 }
