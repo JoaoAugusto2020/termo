@@ -74,7 +74,7 @@ input {
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   #regras {
     z-index: 1;
     display: block;
@@ -86,7 +86,7 @@ input {
     padding: 10px 20px;
     font-size: larger;
   }
-  
+
   .exemplo {
     border: 1px solid;
     display: inline-block;
