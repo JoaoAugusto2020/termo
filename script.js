@@ -1,10 +1,13 @@
+//! MOSTRAR AS REGRAS
+//? Ao carregar a página...
 $(document).ready(function () {
     $("#ok").click(function () {
-        $("#regras").css("display", "none");
-        $(".container").css("display", "block");
+        $("#regras").hide();
+        $(".container").show();
     })
 });
 
+//? Ao carregar a página...
 $(document).ready(function () {
     //no caso do termo a palavraCorreta é do banco, ou gerada automáticamente
     const palavraCorreta = "TIGRE";
@@ -14,9 +17,10 @@ $(document).ready(function () {
     let acertos = 0, completo = 0;
     var del =0;
 
-    
+    //sempre que apertar em "apagar"
     $(".input-letra").keydown(function(event) {
         if(event.which == 8){
+            //o campo está vazio AND anterior não está vazio
             if($(this).val() == "" && $(this).prev().val() !== ""){
                 $(this).prev().val("");
                 $(this).prev().focus();
@@ -27,15 +31,18 @@ $(document).ready(function () {
     });
 
     //! ANTES DE ENVIAR
+    //sempre que digitar
     $(".input-letra").on("keyup", function() {
+        //evita que ative a função caso aperte em "apagar"
         if(del==1){
             del=0;
             return;
         }
         
-        let inputs = document.querySelectorAll(".palpite");
-        this.value = this.value.toUpperCase();
+        this.value = this.value.toUpperCase(); //passa cada letra que digita para maíusculo (visual)
+        let inputs = document.querySelectorAll(".palpite"); //pega todos inputs do palpite
         
+        //encontre o próximo input vazio (esquerda para direita)
         for (var i = 0; i < 5; i++) {
             if(inputs[i].value == ""){
                 $(inputs[i]).focus();
@@ -43,14 +50,18 @@ $(document).ready(function () {
             }
         }
 
+        //veja se todos inputs estão preenchidos
         for (var i = 0; i < 5; i++) {
             if(inputs[i].value !== "") completo++;
         }
+
+        //se sim, foque no botão
         if(completo == 5) $("#submit").focus();
         else completo=0;
     });
 
     //! DEPOIS DE ENVIAR
+    //? Ao clicar no botão de enviar
     $("#submit").click(function () {
         let inputs = document.querySelectorAll(".palpite");
         var palavra = "";
@@ -68,8 +79,8 @@ $(document).ready(function () {
         tentativas++;
         
         for (let i = 0; i < 5; i++) {
-            $(inputs[i]).removeClass("palpite");
-            $(inputs[i]).prop("disabled", true);
+            $(inputs[i]).removeClass("palpite");    //remova do formX a classe palpite
+            $(inputs[i]).prop("disabled", true);    //desativa o formX
             if (palpite[i] === palavraCorreta[i]) {
                 //letra correta e na posição certa
                 $(inputs[i]).css("background-color", "lightgreen");
@@ -83,7 +94,37 @@ $(document).ready(function () {
                 $(inputs[i]).css("background-color", "lightcoral");
             }
         }
+        
+        if (palpite === palavraCorreta) {
+            //Se acertar a palavra
+            $("#message").text(`Parabéns! Você adivinhou a palavra com ${tentativas} tentativas!`);
+            $("#message").css("color", "green");
+            $("#submit").hide();
+            $("#reiniciar").show();
 
+            //tocar som da Shopee
+            var audio = new Audio("./sons/ganhou.mp3");
+            audio.play();
+            var audio = new Audio("./sons/acertou.mp3");
+            audio.play();
+
+            return;
+        } else if (tentativas >= maxTentativas) {
+            //se acabar as tentativas e não tiver ganhado
+            $("#message").text(`Você atingiu o número máximo de tentativas! A palavra era "${palavraCorreta}".`);
+            $("#message").css("color", "red");
+            $("#submit").hide();
+            $("#reiniciar").show();
+
+            //tocar som de gameorver
+            var audio = new Audio("./sons/perdeu.mp3");
+            audio.play();
+
+
+            return;
+        }
+
+        //a cada tentativa, reproduzir um som positivo se acertos>=3 e negativo se não
         if(acertos >= 3){
             var audio = new Audio("./sons/acertou.mp3");
             audio.play();
@@ -93,31 +134,20 @@ $(document).ready(function () {
         }
         acertos=0;
 
-        if (palpite === palavraCorreta) {
-            $("#message").text(`Parabéns! Você adivinhou a palavra com ${tentativas} tentativas!`);
-            $("#message").css("color", "green");
-            $("#submit").prop("disabled", true);
-
-            var audio = new Audio("./sons/ganhou.mp3");
-            audio.play();
-
-            return;
-        } else if (tentativas >= maxTentativas) {
-            $("#message").text(`Você atingiu o número máximo de tentativas! A palavra era "${palavraCorreta}".`);
-            $("#message").css("color", "red");
-            $("#submit").prop("disabled", true);
-
-            var audio = new Audio("./sons/perdeu.mp3");
-            audio.play();
-            return;
-        }
-
+        //mostra quantas tentativas restam
         $("#message").text(`Tentativas restantes: ${maxTentativas - tentativas}`);
 
+        //ativa o próximo formulário para ser o novo palpite
         var novoinputs = document.querySelectorAll(`#form${tentativas+1}>.inputs>input`);
         for (let i = 0; i < 5; i++) {
             $(novoinputs[i]).addClass("palpite");
             $(novoinputs[i]).prop("disabled", false);
         }
+    });
+
+    //! QUANDO ACABAR
+    //? Ao clicar no botão de enviar
+    $("#reiniciar").click(function () {
+        location.reload();
     });
 });
