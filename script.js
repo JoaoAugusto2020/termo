@@ -1,7 +1,5 @@
-import { minhaVariavel, minhaFuncao } from './palavras.js';
-
-console.log(minhaVariavel);
-minhaFuncao(); // "Olá do módulo!"
+import { palavraAleatoria } from './palavras.js';
+console.log("palavra aleatória = " + palavraAleatoria);
 
 //! MOSTRAR AS REGRAS
 //? Ao carregar a página...
@@ -14,14 +12,15 @@ $(document).ready(function () {
 
 //? Ao carregar a página...
 $(document).ready(function () {
-
     //no caso do termo a palavraCorreta é do banco, ou gerada automáticamente
-    const palavraCorreta = "TIGRE";
+    const palavraCorreta = palavraAleatoria;
     const maxTentativas = 6; //a primeira meio q n conta
     let tentativas = 0;
-    let acertos = 0, completo = 0;
+    let acertos = 0;
+    let completo = 0;
     var del =0;
 
+    //! ANTES DE ENVIAR
     //sempre que apertar em "apagar"
     $(".input-letra").keydown(function(event) {
         if(event.which == 8){
@@ -34,8 +33,7 @@ $(document).ready(function () {
             return;
         }
     });
-
-    //! ANTES DE ENVIAR
+    
     //sempre que digitar
     $(".input-letra").on("keyup", function() {
         //evita que ative a função caso aperte em "apagar"
