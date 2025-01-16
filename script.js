@@ -1,3 +1,8 @@
+import { minhaVariavel, minhaFuncao } from './palavras.js';
+
+console.log(minhaVariavel);
+minhaFuncao(); // "Olá do módulo!"
+
 //! MOSTRAR AS REGRAS
 //? Ao carregar a página...
 $(document).ready(function () {
@@ -9,9 +14,9 @@ $(document).ready(function () {
 
 //? Ao carregar a página...
 $(document).ready(function () {
+
     //no caso do termo a palavraCorreta é do banco, ou gerada automáticamente
     const palavraCorreta = "TIGRE";
-    //https://www.npmjs.com/package/@andsfonseca/palavras-pt-br?activeTab=readme (vale a pena tentar)
     const maxTentativas = 6; //a primeira meio q n conta
     let tentativas = 0;
     let acertos = 0, completo = 0;
