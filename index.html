@@ -11,35 +11,36 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="script.js" type="module"></script>
 
+  <link rel="shortcut icon" href="termo-favicon.png" type="image/x-icon">
   <title>Termo da Shopee</title>
 </head>
 <body>
   <div id="regras" style="display: block;">
-    <h1>Descubra a Palavra</h1>
+    <h1 class="subtitulo">Descubra a Palavra</h1>
     <p style="text-align: left;">
       <strong>Discente: </strong>João Augusto Marciano Silva <br>
       <strong>Docente: </strong>Cintia Carvalho Oliveira <br>
       <strong>Disciplina: </strong>Desenvolvimento de Aplicaões WEB I <br>
-      <strong>Turma: </strong>4° período de Análise e Desenvolvimento de Sistemas
-    </p>
+      <strong>Turma: </strong>4° período de Análise e Desenvolvimento de Sistemas <br>
+      <strong>Contexto: </strong> Termo da Shopee é uma paródia do jogo <a href="https://term.ooo">term.ooo</a> para fins acadêmicos. Você pode baixar-lo através do seguinte repositório no Github: <a href="https://github.com/JoaoAugusto2020/termo">https://github.com/JoaoAugusto2020/termo</a></p>
 
-    <p><strong>Termo da Shopee</strong> é uma paródia do jogo <a href="https://term.ooo">term.ooo</a> para fins acadêmicos. Você pode baixar-lo através do seguinte repositório no Github: <a href="https://github.com/JoaoAugusto2020/termo">https://github.com/JoaoAugusto2020/termo</a></p>
+    <h1 class="subtitulo">Regras</h1>
+    <p class="corpo">Neste jogo o seu objetivo é <strong>descobrir a palavra que foi escolhida aleatóriamente</strong>! Vale lembrar que esta palavra sempre terá exatamente 5 letras e não terá acentos ou cedilha.</p>
+    <p class="corpo">A cada tentativa, as letras serão coloridas de VERMELHO caso a letra não esteja na palavra, AMARELO caso a letra esteja na palavra porém em outra posição e VERDE caso a lertra esteja na palavra e está na posição correta. Exemplo, para a palavra "NAVIO" inserindo "NUNCA":</p>
+    <div class="centralizado">
+      <div class="exemplo" style="background-color: lightgreen;">N</div>
+      <div class="exemplo" style="background-color: lightcoral;">U</div>
+      <div class="exemplo" style="background-color: lightyellow;">N</div>
+      <div class="exemplo" style="background-color: lightcoral;">C</div>
+      <div class="exemplo" style="background-color: lightyellow;">A</div>
+    </div>
 
-
-    <p>Neste jogo o seu objetivo é <strong>descobrir a palavra que foi escolhida aleatóriamente</strong>! Vale lembrar que esta palavra sempre terá exatamente 5 letras e não terá acentos ou cedilha.</p>
-    <p>A cada tentativa, as letras serão coloridas de VERMELHO caso a letra não esteja na palavra, AMARELO caso a letra esteja na palavra porém em outra posição e VERDE caso a lertra esteja na palavra e está na posição correta. Exemplo, para a palavra "NAVIO" inserindo "NUNCA":</p>
-    <div class="exemplo" style="background-color: lightgreen;">N</div>
-    <div class="exemplo" style="background-color: lightcoral;">U</div>
-    <div class="exemplo" style="background-color: lightyellow;">N</div>
-    <div class="exemplo" style="background-color: lightcoral;">C</div>
-    <div class="exemplo" style="background-color: lightyellow;">A</div>
-
-    <br><br>
-    <button id="ok">Okay</button>
+    <br>
+    <button id="ok" class="centralizado">Okay</button>
   </div>
 
   <div class="container" style="display: none;">
-    <h1>Termo da Shopee!</h1>
+    <h1 class="titulo">TERMO DA SHOPEE!</h1>
     <!-- <input type="text" id="guess" maxlength="5" placeholder="Digite sua tentativa"> -->
     <div id="form1">
       <div class="inputs">

@@ -12,39 +12,33 @@ $(document).ready(function () {
 
 //? Ao carregar a página...
 $(document).ready(function () {
-    //no caso do termo a palavraCorreta é do banco, ou gerada automáticamente
+    //Palavra do dia
     const palavraCorreta = palavraAleatoria;
-    const maxTentativas = 6; //a primeira meio q n conta
+
+    //Funcionamento geral e visual
+    const maxTentativas = 6;
     let tentativas = 0;
-    let acertos = 0;
-    let completo = 0;
-    var del =0;
+    let acertos = 0, completo = 0;
+
+    //Entradas
+    let inputs = document.querySelectorAll(".palpite"); //pega todos inputs do palpite
 
     //! ANTES DE ENVIAR
-    //sempre que apertar em "apagar"
+    //sempre que apertar uma letra
     $(".input-letra").keydown(function(event) {
+        //sempre que apertar em "apagar"
         if(event.which == 8){
             //o campo está vazio AND anterior não está vazio
             if($(this).val() == "" && $(this).prev().val() !== ""){
                 $(this).prev().val("");
                 $(this).prev().focus();
             }
-            del=1;
-            return;
-        }
-    });
-    
-    //sempre que digitar
-    $(".input-letra").on("keyup", function() {
-        //evita que ative a função caso aperte em "apagar"
-        if(del==1){
-            del=0;
             return;
         }
         
-        this.value = this.value.toUpperCase(); //passa cada letra que digita para maíusculo (visual)
-        let inputs = document.querySelectorAll(".palpite"); //pega todos inputs do palpite
-        
+        //passa cada letra que digita para maíusculo
+        this.value = this.value.toUpperCase(); //apenas por segurança, pois o CSS já o faz
+
         //encontre o próximo input vazio (esquerda para direita)
         for (var i = 0; i < 5; i++) {
             if(inputs[i].value == ""){
@@ -53,12 +47,9 @@ $(document).ready(function () {
             }
         }
 
-        //veja se todos inputs estão preenchidos
-        for (var i = 0; i < 5; i++) {
-            if(inputs[i].value !== "") completo++;
-        }
-
-        //se sim, foque no botão
+        //conte quantos inputs estão preenchidos
+        for (var i = 0; i < 5; i++) if(inputs[i].value !== "") completo++;
+        //se todos estiverem preenchidos, foque no botão
         if(completo == 5) $("#submit").focus();
         else completo=0;
     });
@@ -66,13 +57,14 @@ $(document).ready(function () {
     //! DEPOIS DE ENVIAR
     //? Ao clicar no botão de enviar
     $("#submit").click(function () {
-        let inputs = document.querySelectorAll(".palpite");
+        //forma a palavra
         var palavra = "";
         for (var i = 0; i < 5; i++) {
             palavra += inputs[i].value;
         }
         
-        const palpite = palavra.toUpperCase();
+        //passa a palavra para maíuscula
+        const palpite = palavra;
         if (palpite.length !== 5) {
             alert("Por favor, digite uma palavra de 5 letras.");
             return;
@@ -96,6 +88,7 @@ $(document).ready(function () {
                 //letra não está na palavra
                 $(inputs[i]).css("background-color", "lightcoral");
             }
+            $(inputs[0]).focus();
         }
         
         if (palpite === palavraCorreta) {
