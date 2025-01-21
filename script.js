@@ -22,8 +22,8 @@ $(document).ready(function () {
     var del = 0;
 
 
-    let letras = [], letrascount = [], contador = 0;
-    for (var i=0; i<5; i++) letrascount[i] = 0;
+    let letras = [], letrasCount = [], contador = 0;
+    for (var i=0; i<5; i++) letrasCount[i] = 0;
 
     //para cada letra da palavraCorreta...
     for (var i = 0; i < 5; i++){
@@ -32,14 +32,14 @@ $(document).ready(function () {
         for (var j = 0; j < 5; j++){
             if(palavraCorreta[i] == letras[j]){
                 contem = true;
-                letrascount[j]++;
+                letrasCount[j]++;
                 break;
             }
         }
 
         if(!contem){
             letras[contador] = palavraCorreta[i];
-            letrascount[contador]++;
+            letrasCount[contador]++;
             contador++;
         }
     }
@@ -114,10 +114,34 @@ $(document).ready(function () {
                 //letra correta e na posição certa
                 $(inputs[i]).css("background-color", "lightgreen");
                 acertos++;
+
+                for(var j = 0; j < 5; j++){
+                    if(palpite[i] == letras[j]){
+                        letrasCount--;
+                        break;
+                    }
+                }
             } else if (palavraCorreta.includes(palpite[i])) {
+                for(var j = 0; j < 5; j++){
+                    //até achar a letra que acertou
+                    if(palpite[i] == letras[j]){
+                        //se ainda tiver quantidade no contador
+                        if(letrasCount[j]>0){
+                            //ok
+                            letrasCount--;
+                            $(inputs[i]).css("background-color", "lightyellow");
+                            acertos++;
+                            break;
+                        }else{
+                            //bug
+                            $(inputs[i]).css("background-color", "lightcoral");
+                            break;
+                        }
+                    }
+                }
+
                 //letra correta mas na posição errada
-                $(inputs[i]).css("background-color", "lightyellow");
-                acertos++;
+                
             } else {
                 //letra não está na palavra
                 $(inputs[i]).css("background-color", "lightcoral");
