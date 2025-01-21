@@ -1,3 +1,4 @@
+
 import { palavraAleatoria } from './palavras.js';
 console.log("palavra aleatória = " + palavraAleatoria);
 
@@ -12,33 +13,62 @@ $(document).ready(function () {
 
 //? Ao carregar a página...
 $(document).ready(function () {
-    //Palavra do dia
+    //no caso do termo a palavraCorreta é do banco, ou gerada automáticamente
     const palavraCorreta = palavraAleatoria;
-
-    //Funcionamento geral e visual
-    const maxTentativas = 6;
+    const maxTentativas = 6; //a primeira meio q n conta
     let tentativas = 0;
-    let acertos = 0, completo = 0;
+    let acertos = 0;
+    let completo = 0;
+    var del = 0;
 
-    //Entradas
-    let inputs = document.querySelectorAll(".palpite"); //pega todos inputs do palpite
+
+    let letras = [], letrascount = [], contador = 0;
+    for (var i=0; i<5; i++) letrascount[i] = 0;
+
+    //para cada letra da palavraCorreta...
+    for (var i = 0; i < 5; i++){
+        var contem = false;
+
+        for (var j = 0; j < 5; j++){
+            if(palavraCorreta[i] == letras[j]){
+                contem = true;
+                letrascount[j]++;
+                break;
+            }
+        }
+
+        if(!contem){
+            letras[contador] = palavraCorreta[i];
+            letrascount[contador]++;
+            contador++;
+        }
+    }
 
     //! ANTES DE ENVIAR
-    //sempre que apertar uma letra
+    //sempre que apertar em "apagar"
     $(".input-letra").keydown(function(event) {
-        //sempre que apertar em "apagar"
         if(event.which == 8){
             //o campo está vazio AND anterior não está vazio
             if($(this).val() == "" && $(this).prev().val() !== ""){
                 $(this).prev().val("");
                 $(this).prev().focus();
             }
+            del=1;
+            return;
+        }
+    });
+    
+    //sempre que digitar
+    $(".input-letra").on("keyup", function() {
+        //evita que ative a função caso aperte em "apagar"
+        if(del==1){
+            del=0;
             return;
         }
         
-        //passa cada letra que digita para maíusculo
-        this.value = this.value.toUpperCase(); //apenas por segurança, pois o CSS já o faz
-
+        this.value = this.value.toUpperCase(); //passa cada letra que digita para maíusculo (visual)
+        let inputs = document.querySelectorAll(".palpite"); //pega todos inputs do palpite
+        
         //encontre o próximo input vazio (esquerda para direita)
         for (var i = 0; i < 5; i++) {
             if(inputs[i].value == ""){
@@ -47,9 +77,12 @@ $(document).ready(function () {
             }
         }
 
-        //conte quantos inputs estão preenchidos
-        for (var i = 0; i < 5; i++) if(inputs[i].value !== "") completo++;
-        //se todos estiverem preenchidos, foque no botão
+        //veja se todos inputs estão preenchidos
+        for (var i = 0; i < 5; i++) {
+            if(inputs[i].value !== "") completo++;
+        }
+
+        //se sim, foque no botão
         if(completo == 5) $("#submit").focus();
         else completo=0;
     });
@@ -57,14 +90,15 @@ $(document).ready(function () {
     //! DEPOIS DE ENVIAR
     //? Ao clicar no botão de enviar
     $("#submit").click(function () {
-        //forma a palavra
+        let inputs = document.querySelectorAll(".palpite");
         var palavra = "";
+
         for (var i = 0; i < 5; i++) {
+            //formando a palvra
             palavra += inputs[i].value;
         }
         
-        //passa a palavra para maíuscula
-        const palpite = palavra;
+        const palpite = palavra.toUpperCase(); //apenas segurança, pois o CSS já o faz
         if (palpite.length !== 5) {
             alert("Por favor, digite uma palavra de 5 letras.");
             return;
@@ -88,7 +122,6 @@ $(document).ready(function () {
                 //letra não está na palavra
                 $(inputs[i]).css("background-color", "lightcoral");
             }
-            $(inputs[0]).focus();
         }
         
         if (palpite === palavraCorreta) {
@@ -100,8 +133,10 @@ $(document).ready(function () {
 
             //tocar som da Shopee
             var audio = new Audio("./sons/ganhou.mp3");
+            audio.volume = 0.1;
             audio.play();
             var audio = new Audio("./sons/acertou.mp3");
+            audio.volume = 0.1;
             audio.play();
 
             return;
@@ -114,6 +149,7 @@ $(document).ready(function () {
 
             //tocar som de gameorver
             var audio = new Audio("./sons/perdeu.mp3");
+            audio.volume = 0.1;
             audio.play();
 
 
@@ -123,9 +159,11 @@ $(document).ready(function () {
         //a cada tentativa, reproduzir um som positivo se acertos>=3 e negativo se não
         if(acertos >= 3){
             var audio = new Audio("./sons/acertou.mp3");
+            audio.volume = 0.1;
             audio.play();
         }else {
             var audio = new Audio(`./sons/errou${tentativas}.mp3`);
+            audio.volume = 0.1;
             audio.play();
         }
         acertos=0;
