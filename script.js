@@ -44,6 +44,12 @@ $(document).ready(function () {
         }
     }
 
+    //TESTES
+    // for(var k = 0; k < 5; k++) {
+    //     console.log("letra: " + letras[k]);
+    //     console.log("qtd: " + letrasCount[k]);
+    // }
+
     //! ANTES DE ENVIAR
     //sempre que apertar em "apagar"
     $(".input-letra").keydown(function(event) {
@@ -105,7 +111,7 @@ $(document).ready(function () {
         }
 
         //! Daqui em diante já é uma tentativa válida
-        tentativas++;
+        tentativas++
         
         for (let i = 0; i < 5; i++) {
             $(inputs[i]).removeClass("palpite");    //remova do formX a classe palpite
@@ -117,7 +123,7 @@ $(document).ready(function () {
 
                 for(var j = 0; j < 5; j++){
                     if(palpite[i] == letras[j]){
-                        letrasCount--;
+                        letrasCount[j]--;
                         break;
                     }
                 }
@@ -126,9 +132,9 @@ $(document).ready(function () {
                     //até achar a letra que acertou
                     if(palpite[i] == letras[j]){
                         //se ainda tiver quantidade no contador
-                        if(letrasCount[j]>0){
+                        if(letrasCount[j]>=0){
                             //ok
-                            letrasCount--;
+                            letrasCount[j]--;
                             $(inputs[i]).css("background-color", "lightyellow");
                             acertos++;
                             break;
